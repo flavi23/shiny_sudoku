@@ -18,7 +18,7 @@ The same vector with the first three numbers now being the fourth fifth and sixt
 Offset 3 function
 }
 \examples{
-Matrix_m <- matrix(sample(1:9), nrow = 9, ncol = 9)
+Matrix_m <- matrix(sample(1:9, replace = FALSE), nrow = 9, ncol = 9)
 Matrix_m[2,] <- offset3(Matrix_m[1,])
 }
 \author{

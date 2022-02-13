@@ -16,7 +16,7 @@ The same temporary matrix with the rest of the columns filled (doing another cir
 Generate 3 function
 }
 \examples{
-Matrix_m <- matrix(sample(1:9), nrow = 9, ncol = 9)
+Matrix_m <- matrix(sample(1:9, replace = FALSE), nrow = 9, ncol = 9)
 Matrix_m[,1:3] <- generate3(Matrix_m[,1:3])
 }
 \author{

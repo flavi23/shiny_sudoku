@@ -19,7 +19,7 @@ matrix_grid <- function()
   Matrix_m <- matrix(0, nrow = 9, ncol = 9)
   
   #first three lines
-  Matrix_m[1,] <- sample(1:9, replace = F)
+  Matrix_m[1,] <- sample(1:9, replace = FALSE)
   Matrix_m[2,] <- offset3(Matrix_m[1,])
   Matrix_m[3,] <- offset3(Matrix_m[2,])
   
@@ -39,7 +39,7 @@ matrix_grid <- function()
 #' @return The same vector with the first three numbers now being the fourth fifth and sixth and so on (shifting in circle)
 #' @author Flavie B.
 #' @examples
-#' Matrix_m <- matrix(sample(1:9), nrow = 9, ncol = 9)
+#' Matrix_m <- matrix(sample(1:9, replace = FALSE), nrow = 9, ncol = 9)
 #' Matrix_m[2,] <- offset3(Matrix_m[1,])
 #' @export offset3
 offset3 <- function(Vect, Rev = FALSE)
@@ -56,7 +56,7 @@ offset3 <- function(Vect, Rev = FALSE)
 #' @return The same temporary matrix with the rest of the columns filled (doing another circle shift) 
 #' @author Flavie B.
 #' @examples
-#' Matrix_m <- matrix(sample(1:9), nrow = 9, ncol = 9)
+#' Matrix_m <- matrix(sample(1:9, replace = FALSE), nrow = 9, ncol = 9)
 #' Matrix_m[,1:3] <- generate3(Matrix_m[,1:3])
 #' @export generate3
 generate3 <- function(Temp_m)
