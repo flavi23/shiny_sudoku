@@ -4,26 +4,24 @@
 #
 
 library(shiny)
+library(bslib)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
-
+  
+    #Theme
+    theme = bs_theme(
+    bootswatch = "sketchy"),
+    
     # Application title
     titlePanel("Sudoku"),
 
     # Sidebar with a slider input for number of bins
     sidebarLayout(
-        sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
-        ),
+        sidebarPanel(),
 
         # Show a plot of the generated distribution
         mainPanel(
-            plotOutput("distPlot"),
             tableOutput("distMatrix")
         )
     )

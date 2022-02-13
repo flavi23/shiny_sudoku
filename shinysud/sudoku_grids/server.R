@@ -4,6 +4,7 @@
 #
 
 library(shiny)
+library(bslib)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -13,6 +14,7 @@ shinyServer(function(input, output) {
     },  
     bordered = TRUE,
     colnames = FALSE,
+    spacing = 'l',
     digits = 0)    
 
 })
