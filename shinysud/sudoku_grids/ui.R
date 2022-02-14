@@ -5,6 +5,7 @@
 
 library(shiny)
 library(bslib)
+library(DT)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -19,14 +20,14 @@ shinyUI(fluidPage(
     # Sidebar with a slider input for number of bins
     sidebarLayout(
         sidebarPanel(
-          actionButton("do", "Resolve")
+          actionButton("do", "Resolve"),
+          fluidRow(column(1,tableOutput("Solution")))
         ),
 
-        # Displays the sudoku grid and the solution once the "Resolve" 
+        # Displays the Sudoku grid and the solution once the "Resolve" 
         # button is clicked
         mainPanel(
-            tableOutput("Grid"),
-            tableOutput("Solution")
+            tableOutput("Grid")
         )
     )
 ))

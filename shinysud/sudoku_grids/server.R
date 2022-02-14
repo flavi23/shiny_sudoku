@@ -5,6 +5,8 @@
 
 library(shiny)
 library(bslib)
+library(DT)
+library(formattable)
 
 # Define server logic required to display the Sudoku grid 
 shinyServer(function(input, output) {
@@ -12,7 +14,7 @@ shinyServer(function(input, output) {
     Matrix_sol <- matrix_grid()
 
     output$Grid <- renderTable({
-     Sudoku_grid <- matrix_play(Matrix_sol)
+     Sudoku_grid <- matrix_remover(Matrix_sol)
     },  
      bordered = TRUE,
      colnames = FALSE,
