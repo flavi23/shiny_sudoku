@@ -18,11 +18,15 @@ shinyUI(fluidPage(
 
     # Sidebar with a slider input for number of bins
     sidebarLayout(
-        sidebarPanel(),
+        sidebarPanel(
+          actionButton("do", "Resolve")
+        ),
 
-        # Show a plot of the generated distribution
+        # Displays the sudoku grid and the solution once the "Resolve" 
+        # button is clicked
         mainPanel(
-            tableOutput("distMatrix")
+            tableOutput("Grid"),
+            tableOutput("Solution")
         )
     )
 ))

@@ -9,26 +9,27 @@
 #   Test Package:              'Ctrl + Shift + T'
 
 #' Matrix grid function
-#' Generates a filled 9x9 matrix we will be able to use as a sudoku grid
+#' Generates a filled 9x9 matrix corresponding to the solution 
+#' for the Sudoku grid
 #' @return a 9x9 Matrix
 #' @author Flavie B.
 #' @export matrix_grid
 matrix_grid <- function()
 {
   #matrix initialisation
-  Matrix_m <- matrix(0, nrow = 9, ncol = 9)
+  Matrix_sol <- matrix(0, nrow = 9, ncol = 9)
   
   #first three lines
-  Matrix_m[1,] <- sample(1:9, replace = FALSE)
-  Matrix_m[2,] <- offset3(Matrix_m[1,])
-  Matrix_m[3,] <- offset3(Matrix_m[2,])
+  Matrix_sol[1,] <- sample(1:9, replace = FALSE)
+  Matrix_sol[2,] <- offset3(Matrix_sol[1,])
+  Matrix_sol[3,] <- offset3(Matrix_sol[2,])
   
   #columns
-  Matrix_m[,1:3] <- generate3(Matrix_m[,1:3])
-  Matrix_m[,4:6] <- generate3(Matrix_m[,4:6])
-  Matrix_m[,7:9] <- generate3(Matrix_m[,7:9])
+  Matrix_sol[,1:3] <- generate3(Matrix_sol[,1:3])
+  Matrix_sol[,4:6] <- generate3(Matrix_sol[,4:6])
+  Matrix_sol[,7:9] <- generate3(Matrix_sol[,7:9])
   
-  return(Matrix_m)
+  return(Matrix_sol)
 }
 
 

@@ -4,8 +4,7 @@ Title: Generates Sudoku grids
 Version: 0.1.0
 Author: Flavie Benard
 Maintainer: Flavie Benard <flavie.benard@etu.umontpellier.fr>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: A shiny web app to play Sudoku, with (soon) a grid we can fill and the solution for this grid. 
 License: MIT LICENSE
 Encoding: UTF-8
 LazyData: true
