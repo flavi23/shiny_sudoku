@@ -1,11 +1,11 @@
 Package: shinysud
-Type: Package
-Title: Generates Sudoku grids
-Version: 0.1.0
-Author: Flavie Benard
-Maintainer: Flavie Benard <flavie.benard@etu.umontpellier.fr>
-Description: A shiny web app to play Sudoku, with (soon) a grid we can fill and the solution for this grid. 
-License: MIT LICENSE
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2

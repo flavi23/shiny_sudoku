@@ -4,7 +4,8 @@
 #' @param Matrix_m The solution matrix generated
 #' @return a 9x9 Matrix
 #' @author Flavie B.
-#' @export matrix_play
+#' @importFrom stats runif
+#' @export matrix_remover
 matrix_remover <- function(Matrix_m)
 {
   while(sum(is.na(Matrix_m)) < 5)
@@ -13,6 +14,6 @@ matrix_remover <- function(Matrix_m)
   j <- floor(runif(1,1,9))
   Matrix_m[i,j] <- NA
     }
-  
+
   return(Matrix_m)
 }

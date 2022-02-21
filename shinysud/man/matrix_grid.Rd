@@ -3,7 +3,8 @@
 \name{matrix_grid}
 \alias{matrix_grid}
 \title{Matrix grid function
-Generates a filled 9x9 matrix we will be able to use as a sudoku grid}
+Generates a filled 9x9 matrix corresponding to the solution
+for the Sudoku grid}
 \usage{
 matrix_grid()
 }
@@ -12,7 +13,8 @@ a 9x9 Matrix
 }
 \description{
 Matrix grid function
-Generates a filled 9x9 matrix we will be able to use as a sudoku grid
+Generates a filled 9x9 matrix corresponding to the solution
+for the Sudoku grid
 }
 \author{
 Flavie B.

@@ -5,7 +5,7 @@
 
 library(shiny)
 library(bslib)
-library(DT)
+#library(DT)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
