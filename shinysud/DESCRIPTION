@@ -1,10 +1,10 @@
 Package: shinysud
-Title: What the Package Does (One Line, Title Case)
+Title: Generates (soon playable) sudoku grids
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+    person("Flavie", "Benard", , "flavie.benard@etu.umontpellier.fr", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: The package allows you to build a shiny app for generating sudoku grids and their resolution.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

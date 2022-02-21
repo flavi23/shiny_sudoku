@@ -2,5 +2,6 @@
 
 export(generate3)
 export(matrix_grid)
-export(matrix_play)
+export(matrix_remover)
 export(offset3)
+importFrom(stats,runif)
