@@ -8,7 +8,7 @@
 #' @export matrix_remover
 matrix_remover <- function(Matrix_m)
 {
-  while(sum(is.na(Matrix_m)) < 5)
+  while(sum(is.na(Matrix_m)) < 30)
     {
   i <- floor(runif(1,1,9))
   j <- floor(runif(1,1,9))
