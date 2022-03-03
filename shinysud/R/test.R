@@ -12,3 +12,13 @@ l9 <- c(NA,6,NA,NA,NA,3,1,7,NA)
 
 matrixdur <- data.frame(l1,l2,l3,l4,l5,l6,l7,l8,l9)
 matrixdur <- t(as.matrix(matrixdur))
+
+sudoku_grid <- function() {
+  Sudoku_sol <- matrix_grid()
+  Sudoku_solved <- FALSE
+  while(!is.matrix(Sudoku_solved)) {
+    Sudoku <- matrix_remover(Sudoku_sol)
+    Sudoku_solved <- matrix_solver(Sudoku)
+  }
+  return(Sudoku)
+}

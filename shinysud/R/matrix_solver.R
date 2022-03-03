@@ -1,16 +1,19 @@
 #' Matrix solver function
-#' This function solves a sudoku grid.
-#' @param Matrix_m The playable matrix generated.
-#' @return a 9x9 Matrix
+#' This function solves a Sudoku grid.
+#' @param Matrix The playable matrix generated.
+#' @param layer Integer showing depth of the called functions. Default = 0.
+#' @return a 9x9 Matrix corresponding to the solution found by the solver,
+#' or TRUE/FALSE
 #' @author Flavie B.
 #' @export matrix_solver
-matrix_solver <- function(Matrix_solved) {
-  #temp is a list containing the dataframe emptycells and a boolean
-  temp <- empty_cells(Matrix_solved)
+matrix_solver <- function(Matrix,layer = 0) {
+  print(paste0("Depth: ",layer))
+  #temp is a list containing the dataframe emptycells and a Boolean
+  temp <- empty_cells(Matrix)
   empty_cases <- as.data.frame(temp[1])
-  if(temp[2] == FALSE && !any(is.na(Matrix_solved))) {
+  if(temp[2] == FALSE && !any(is.na(Matrix))) {
     print("Sudoku solved")
-    return(Matrix_solved)
+    return(Matrix)
   }
 
   #while all the functions return TRUE, and the matrix is not solved,
@@ -18,33 +21,37 @@ matrix_solver <- function(Matrix_solved) {
   while(temp[2] == TRUE) {
     for(i in 1:nrow(empty_cases)) {
       #if there is a solution for each row of empty_cases,
-      #add the corresponding number to Matrix_solved
+      #add the corresponding number to Matrix
       if(!is.na(empty_cases$sol[i])) {
-        Matrix_solved[empty_cases$row[i],empty_cases$col[i]] <- as.numeric(
+        Matrix[empty_cases$row[i],empty_cases$col[i]] <- as.numeric(
           substr(empty_cases$sol[i],2,2))
       }
-
+      #if one case does not have a solution, stop everything
+      if(empty_cases$nb_sol[i] == 0) {
+        return(FALSE)
+      }
     }
-    #recalculate empty_cells for the updated Matrix_solved,
+    #recalculate empty_cells for the updated Matrix,
     #checking if the matrix is solved
-    temp <- empty_cells(Matrix_solved)
+    temp <- empty_cells(Matrix)
     empty_cases <- as.data.frame(temp[1])
   }
   #if the by deduction method is not enough to solve the matrix
   #try the trials and errors method
   if(nrow(empty_cases) != 0) {
-    Matrix_solved <- trials_errors(Matrix_solved,empty_cases)
-    return(Matrix_solved)
+    Matrix <- trials_errors(Matrix,empty_cases,layer+1)
+    return(Matrix)
   }
   print('Success! Sudoku solved')
-  return(Matrix_solved)
+  return(Matrix)
 }
 
 #' Empty cells function
 #' This function finds empty cells in the sudoku grid and searches for
 #' possible numbers to fill them.
 #' @param Matrix_m The playable matrix generated.
-#' @return a dataframe with information on the empty cells of the matrix
+#' @return a list containing a dataframe with information on the empty cells
+#' of the matrix and a Boolean
 #' @author Flavie B.
 #' @export empty_cells
 empty_cells <- function(Matrix_m) {
@@ -78,6 +85,11 @@ empty_cells <- function(Matrix_m) {
   }
   emptycells <- cbind(emptycells,nb_sol,sol)
 
+  if(all(emptycells[,4:12] == FALSE)) {
+    print('alors')
+    return(list(emptycells,FALSE))
+  }
+
   if(all(emptycells$nb_sol > 1)) {
     temp <- by_deduction(emptycells)
     if(temp[2] == FALSE) {
@@ -109,23 +121,42 @@ by_deduction <- function(emptycells) {
   return(list(emptycells,FALSE))
 }
 
-trials_errors <- function(matrix_m, emptycells) {
+trials_errors <- function(matrix_m, emptycells,layer) {
+
+  solved <- matrix(NA,9,9)
+  solved_state <- FALSE
+
   emptycells <- emptycells[order(emptycells$nb_sol),]
-  for(i in 1:nrow(emptycells)) {
-    num_trial <- colnames(emptycells[i,4:12])[emptycells[i,4:12] == TRUE]
-    for(j in 1:length(num_trial)) {
-      print(paste0(emptycells$row[i],"x",emptycells$col[i]," Number: ",num_trial[j]))
-      matrix_m[emptycells$row[i],emptycells$col[i]] <- as.numeric(
-        substr(num_trial[j],2,2))
-      solve <- matrix_solver(matrix_m)
-      if(!any(is.na(solve))) {
-        #continuer for pr voir si solution pas unique
-        return(solve)
+  num_trial <- colnames(emptycells[1,4:12])[emptycells[1,4:12] == TRUE]
+  for(j in 1:length(num_trial)) {
+    print(paste0(emptycells$row[1],"x",emptycells$col[1]," Number: ",
+                 num_trial[j]))
+    matrix_m[emptycells$row[1],emptycells$col[1]] <- as.numeric(
+      substr(num_trial[j],2,2))
+    solve <- matrix_solver(matrix_m,layer)
+
+    if(!is.matrix(solve) && solve == TRUE){return(TRUE)}
+    #checks if the matrix is solved
+    if(is.matrix(solve) && !any(is.na(solve))) {
+      #stores the first solved matrix
+      if(solved_state == FALSE) {
+        solved_state <- TRUE
+        solved <- solve
+      }
+
+      if(solved_state == TRUE && !all(solved == solve)) {
+        #if already stored it means that there are multiple solutions
+        print("Multiple solutions")
+        return(TRUE)
       }
     }
   }
-  #in case of malfunction
-  print('Error')
+  #check if the matrix is really solved before returning
+  if(is.matrix(solved) && !any(is.na(solved))) {
+    if(layer == 1){print("Unique solution!")}
+    return(solved)
+  }
+  #else in case of malfunction
   return(FALSE)
 }
 

@@ -6,10 +6,10 @@
 A sudoku grid ready to be played based on the solution matrix generated.
 The function clears some of the cases (replacing the numbers with NA)}
 \usage{
-matrix_remover(Matrix_m)
+matrix_remover(Matrix_sol)
 }
 \arguments{
-\item{Matrix_m}{The solution matrix generated}
+\item{Matrix_sol}{The solution matrix generated}
 }
 \value{
 a 9x9 Matrix
