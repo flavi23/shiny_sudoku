@@ -6,14 +6,15 @@
 #' @author Flavie B.
 #' @importFrom stats runif
 #' @export matrix_remover
-matrix_remover <- function(Matrix_m)
-{
-  while(sum(is.na(Matrix_m)) < 30)
+matrix_remover <- function(Matrix_sol) {
+  while(sum(is.na(Matrix_sol)) < floor(runif(1,15,40)))
     {
   i <- floor(runif(1,1,9))
   j <- floor(runif(1,1,9))
-  Matrix_m[i,j] <- NA
+  Matrix_sol[i,j] <- NA
     }
 
-  return(Matrix_m)
+  return(Matrix_sol)
 }
+
+#partir de matrix(NA,9,9) et remplir certaines cases avec Matrix_sol

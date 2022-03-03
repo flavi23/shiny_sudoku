@@ -4,19 +4,39 @@
 #' @return a 9x9 Matrix
 #' @author Flavie B.
 #' @export matrix_solver
-matrix_solver <- function(Matrix_solved)
-{
-  empty_cases <- empty_cells(Matrix_solved)
-
-  while(is.data.frame(empty_cases)) {
-    for(i in 1:nrow(empty_cases)) {
-      #in case of issue check here first
-      if(is.data.frame(empty_cases) && empty_cases$nb_sol[i] == 1) {
-        Matrix_solved[empty_cases$row[i],empty_cases$col[i]] <- as.numeric(substr(empty_cases$sol[i],2,2))
-      }
-    }
-    empty_cases <- empty_cells(Matrix_solved)
+matrix_solver <- function(Matrix_solved) {
+  #temp is a list containing the dataframe emptycells and a boolean
+  temp <- empty_cells(Matrix_solved)
+  empty_cases <- as.data.frame(temp[1])
+  if(temp[2] == FALSE && !any(is.na(Matrix_solved))) {
+    print("Sudoku solved")
+    return(Matrix_solved)
   }
+
+  #while all the functions return TRUE, and the matrix is not solved,
+  #matrix_solver tries to solve it
+  while(temp[2] == TRUE) {
+    for(i in 1:nrow(empty_cases)) {
+      #if there is a solution for each row of empty_cases,
+      #add the corresponding number to Matrix_solved
+      if(!is.na(empty_cases$sol[i])) {
+        Matrix_solved[empty_cases$row[i],empty_cases$col[i]] <- as.numeric(
+          substr(empty_cases$sol[i],2,2))
+      }
+
+    }
+    #recalculate empty_cells for the updated Matrix_solved,
+    #checking if the matrix is solved
+    temp <- empty_cells(Matrix_solved)
+    empty_cases <- as.data.frame(temp[1])
+  }
+  #if the by deduction method is not enough to solve the matrix
+  #try the trials and errors method
+  if(nrow(empty_cases) != 0) {
+    Matrix_solved <- trials_errors(Matrix_solved,empty_cases)
+    return(Matrix_solved)
+  }
+  print('Success! Sudoku solved')
   return(Matrix_solved)
 }
 
@@ -30,33 +50,83 @@ matrix_solver <- function(Matrix_solved)
 empty_cells <- function(Matrix_m) {
 
   #creates a table with the row and col of each cell with NA and initialises sol
-  empty_cells <- which(is.na(Matrix_m), arr.ind = TRUE)
+  emptycells <- which(is.na(Matrix_m), arr.ind = TRUE)
   sol <- c()
   nb_sol <- c()
 
-  if(nrow(empty_cells) == 0) return(TRUE)
+  #if no NA in matrix, no need to do the rest (the matrix is already solved)
+  if(nrow(emptycells) == 0) return(list(emptycells,FALSE))
 
   #initialises a dataframe with the previous table and 9 new columns to know which number is valid
-  empty_cells <- data.frame(empty_cells, box = c(1:nrow(empty_cells)), matrix(NA, nrow = nrow(empty_cells), ncol = 9))
+  emptycells <- data.frame(emptycells, box = c(1:nrow(emptycells)),
+                           matrix(NA, nrow = nrow(emptycells), ncol = 9))
 
   #for each empty cell checks which numbers could be placed in this cell
-  for(i in 1:nrow(empty_cells)) {
-    empty_cells$box[i] <- num_block(empty_cells$row[i],empty_cells$col[i])
+  for(i in 1:nrow(emptycells)) {
+    emptycells$box[i] <- num_block(emptycells$row[i],emptycells$col[i])
     for(j in 1:9) {
-      empty_cells[i,j+3] <- is_valid(Matrix_m, j, empty_cells[i,1],empty_cells[i,2])
+      emptycells[i,j+3] <- is_valid(Matrix_m, j,
+                                    emptycells[i,1],emptycells[i,2])
     }
-    nb_sol <- c(nb_sol,sum(empty_cells[i,4:12], na.rm = FALSE))
+    nb_sol <- c(nb_sol,sum(emptycells[i,4:12], na.rm = FALSE))
     if(nb_sol[i] == 1) {
-      sol <- c(sol,colnames(empty_cells[i,4:12])[empty_cells[i,4:12] == TRUE])
+      sol <- c(sol,colnames(emptycells[i,4:12])[emptycells[i,4:12] == TRUE])
     }
     else {
       sol <- c(sol,NA)
     }
   }
-  empty_cells <- cbind(empty_cells,nb_sol,sol)
-    #recup resultat de empty_cells (nom col où TRUE) et stocker ds empty_cells
-    #ou alors utilise direct?
-  return(empty_cells)
+  emptycells <- cbind(emptycells,nb_sol,sol)
+
+  if(all(emptycells$nb_sol > 1)) {
+    temp <- by_deduction(emptycells)
+    if(temp[2] == FALSE) {
+      return(list(emptycells,FALSE))
+    }
+    else {
+      emptycells <- as.data.frame(temp[1])
+    }
+  }
+
+  return(list(emptycells,TRUE))
+}
+
+by_deduction <- function(emptycells) {
+  for(i in 1:nrow(emptycells)) {
+    x <- c(colnames(emptycells[i,4:12])[emptycells[i,4:12] == TRUE])
+    for(j in 1:length(x)) {
+      y <- unlist(emptycells[x[j]])
+      y[i] <- FALSE
+      if(all(y[emptycells$col == emptycells$col[i]] == FALSE)
+         || all(y[emptycells$row == emptycells$row[i]] == FALSE)
+         || all(y[emptycells$box == emptycells$box[i]] == FALSE)) {
+        emptycells$sol[i] <- x[j]
+        return(list(emptycells,TRUE))
+      }
+    }
+  }
+  print("Deduction not enough")
+  return(list(emptycells,FALSE))
+}
+
+trials_errors <- function(matrix_m, emptycells) {
+  emptycells <- emptycells[order(emptycells$nb_sol),]
+  for(i in 1:nrow(emptycells)) {
+    num_trial <- colnames(emptycells[i,4:12])[emptycells[i,4:12] == TRUE]
+    for(j in 1:length(num_trial)) {
+      print(paste0(emptycells$row[i],"x",emptycells$col[i]," Number: ",num_trial[j]))
+      matrix_m[emptycells$row[i],emptycells$col[i]] <- as.numeric(
+        substr(num_trial[j],2,2))
+      solve <- matrix_solver(matrix_m)
+      if(!any(is.na(solve))) {
+        #continuer for pr voir si solution pas unique
+        return(solve)
+      }
+    }
+  }
+  #in case of malfunction
+  print('Error')
+  return(FALSE)
 }
 
 #' Is valid function
@@ -100,6 +170,3 @@ num_block <- function(row,col) {
   num_block <- block$x + (block$y - 1)*3
   return (num_block)
 }
-
-#empty_cells <- function(matrix){
-  #which(is.na(matrix), arr.ind = TRUE)}
