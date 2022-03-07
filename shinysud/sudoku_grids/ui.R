@@ -1,33 +1,45 @@
 #
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
+#This is the user-interface definition of The Sudoku Shiny web application.
 #
 
 library(shiny)
 library(bslib)
 #library(DT)
 
-# Define UI for application that draws a histogram
+#Define UI for application that generates a Sudoku grid and its solution
 shinyUI(fluidPage(
-  
+
     #Theme
     theme = bs_theme(
     bootswatch = "sketchy"),
-    
-    # Application title
+
+    #Application title
     titlePanel("Sudoku"),
 
-    # Sidebar with a slider input for number of bins
-    sidebarLayout(
-        sidebarPanel(
-          actionButton("do", "Resolve"),
-          fluidRow(column(1,tableOutput("Solution")))
-        ),
+    #Sidebar with a select input for choosing the level of the Sudoku
+    sidebarLayout(sidebarPanel(selectInput("level", "Level",
+                                           c("Easy","Medium","Difficult")),
+                               sliderInput("i", "Line", 1,
+                                            min = 1, max = 9),
+                               sliderInput("j", "Column", 1,
+                                            min = 1, max = 9),
+                               numericInput("number", "Number", NA,
+                                            min = 1, max = 9)
+                               ),
+        #New panels for generating and displaying the Sudoku grid
+        # + displaying the solution
+        mainPanel(navlistPanel(
+          tabPanel(actionButton("generate","Generate"),"Grid",
+                   tableOutput("Grid")),
+          tabPanel(actionButton("confirm","Confirm"),"Your try",
+                   tableOutput("RespGrid")),
+          tabPanel(actionButton("solve", "Resolve"),"Solution",
+                   tableOutput("Solution")))
+          )
 
-        # Displays the Sudoku grid and the solution once the "Resolve" 
-        # button is clicked
-        mainPanel(
-            tableOutput("Grid")
-        )
+    #numericInput("case", " ", NA, min = 1, max = 9)
+
     )
 ))
+
+
