@@ -7,15 +7,24 @@
 #' @author Flavie B.
 #' @export matrix_solver
 matrix_solver <- function(Matrix,layer = 0) {
+
+  startTime <- Sys.time()
+
   print(paste0("Depth: ",layer))
   #temp is a list containing the dataframe emptycells and a Boolean
   temp <- empty_cells(Matrix)
   empty_cases <- as.data.frame(temp[1])
+  assign("Dif", "TooEasy", envir = .GlobalEnv)
+  if(layer == 0) {
+    assign("NbDeduct", 0, envir = .GlobalEnv)
+  }
+
   if(temp[2] == FALSE && !any(is.na(Matrix))) {
     print("Sudoku solved")
     return(Matrix)
   }
 
+  counterdif = 0
   #while all the functions return TRUE, and the matrix is not solved,
   #matrix_solver tries to solve it
   while(temp[2] == TRUE) {
@@ -23,6 +32,7 @@ matrix_solver <- function(Matrix,layer = 0) {
       #if there is a solution for each row of empty_cases,
       #add the corresponding number to Matrix
       if(!is.na(empty_cases$sol[i])) {
+        counterdif <- counterdif + 1
         Matrix[empty_cases$row[i],empty_cases$col[i]] <- as.numeric(
           substr(empty_cases$sol[i],2,2))
       }
@@ -40,14 +50,33 @@ matrix_solver <- function(Matrix,layer = 0) {
   #try the trials and errors method
   if(nrow(empty_cases) != 0) {
     Matrix <- trials_errors(Matrix,empty_cases,layer+1)
+
+    if(is.matrix(Matrix)){
+      assign("Dif", "Difficult", envir = .GlobalEnv)
+    }
+    else assign("Dif", "Impossible", envir = .GlobalEnv)
+
+    print(paste0("Sudoku solved in : ",round(Sys.time() - startTime,2)," sec"))
     return(Matrix)
   }
+  if (Dif != "Medium" && Dif != "Difficult")
+  {
+    if (counterdif > 52) {
+      assign("Dif", "Medium", envir = .GlobalEnv)
+    }
+    else if (counterdif > 48) {
+      assign("Dif", "Easy", envir = .GlobalEnv)
+    }
+  }
   print('Success! Sudoku solved')
+  print(paste0("Sudoku solved in : ",round(Sys.time() - startTime,2)," sec"))
   return(Matrix)
 }
 
+###############################################################################
+
 #' Empty cells function
-#' This function finds empty cells in the sudoku grid and searches for
+#' This function finds empty cells in the Sudoku grid and searches for
 #' possible numbers to fill them.
 #' @param Matrix_m The playable matrix generated.
 #' @return a list containing a dataframe with information on the empty cells
@@ -64,7 +93,8 @@ empty_cells <- function(Matrix_m) {
   #if no NA in matrix, no need to do the rest (the matrix is already solved)
   if(nrow(emptycells) == 0) return(list(emptycells,FALSE))
 
-  #initialises a dataframe with the previous table and 9 new columns to know which number is valid
+  #initialises a dataframe with the previous table and 9 new columns to know
+  #which number is valid
   emptycells <- data.frame(emptycells, box = c(1:nrow(emptycells)),
                            matrix(NA, nrow = nrow(emptycells), ncol = 9))
 
@@ -103,7 +133,17 @@ empty_cells <- function(Matrix_m) {
   return(list(emptycells,TRUE))
 }
 
+###############################################################################
+
 by_deduction <- function(emptycells) {
+  assign("NbDeduct", NbDeduct+1, envir = .GlobalEnv)
+  if(NbDeduct > 3){
+    assign("Dif", "Difficult", envir = .GlobalEnv)
+  }
+  else{
+    assign("Dif", "Medium", envir = .GlobalEnv)
+  }
+
   for(i in 1:nrow(emptycells)) {
     x <- c(colnames(emptycells[i,4:12])[emptycells[i,4:12] == TRUE])
     for(j in 1:length(x)) {
@@ -121,6 +161,8 @@ by_deduction <- function(emptycells) {
   return(list(emptycells,FALSE))
 }
 
+###############################################################################
+
 trials_errors <- function(matrix_m, emptycells,layer) {
 
   solved <- matrix(NA,9,9)
@@ -128,6 +170,7 @@ trials_errors <- function(matrix_m, emptycells,layer) {
 
   emptycells <- emptycells[order(emptycells$nb_sol),]
   num_trial <- colnames(emptycells[1,4:12])[emptycells[1,4:12] == TRUE]
+
   for(j in 1:length(num_trial)) {
     print(paste0(emptycells$row[1],"x",emptycells$col[1]," Number: ",
                  num_trial[j]))
@@ -160,6 +203,8 @@ trials_errors <- function(matrix_m, emptycells,layer) {
   return(FALSE)
 }
 
+###############################################################################
+
 #' Is valid function
 #' This function checks if a certain number can be placed in a certain empty
 #' case. The number is valid if it does not already appear in the row, column,
@@ -173,20 +218,23 @@ trials_errors <- function(matrix_m, emptycells,layer) {
 #' @author Flavie B.
 #' @export is_valid
 is_valid <- function(matrix, num, row, col) {
-  #Checks if the number is already present in the row or column
+
+  #Check if the number is already present in the row or column
   if(any(matrix[row,] == num, na.rm = TRUE) ||
      any(matrix[,col] == num, na.rm = TRUE)) {
     return(FALSE)
   }
 
-  #Checks if the number is present in other parts of the 3x3 block
-  #pr voir row/col/block affectés qd resout une possibilite
+  #Check if the number is present in other parts of the 3x3 block
+  #to see row/col/block affected when trying a possibility
   block <- box(row,col)
   block <- matrix[(3*block$y - 2):(3*block$y),(3*block$x - 2):(3*block$x)]
   if(any(block == num, na.rm = TRUE)) return(FALSE)
 
   return(TRUE)
 }
+
+###############################################################################
 
 #Function to define the box around a case with its row and col
 box <- function(row,col) {

@@ -24,12 +24,14 @@ matrix_grid <- function() {
   return(Matrix_sol)
 }
 
+###############################################################################
 
 #' Offset 3 function
 #'
 #' @param Vect A vector of 9 corresponding to the line or column of interest
 #' @param Rev A Boolean to indicate the direction of the offset
-#' @return The same vector with the first three numbers now being the fourth fifth and sixth and so on (shifting in circle)
+#' @return The same vector with the first three numbers now being the fourth
+#' fifth and sixth and so on (shifting in circle)
 #' @author Flavie B.
 #' @examples
 #' Matrix_m <- matrix(sample(1:9, replace = FALSE), nrow = 9, ncol = 9)
@@ -42,10 +44,14 @@ offset3 <- function(Vect, Rev = FALSE) {
   return(Vect)
 }
 
+###############################################################################
+
 #' Generate 3 function
 #'
-#' @param Temp_m A temporary matrix storing the three columns of one block from the main matrix
-#' @return The same temporary matrix with the rest of the columns filled (doing another circle shift)
+#' @param Temp_m A temporary matrix storing the three columns of one block
+#' from the main matrix
+#' @return The same temporary matrix with the rest of the columns filled
+#' (doing another circle shift)
 #' @author Flavie B.
 #' @examples
 #' Matrix_m <- matrix(sample(1:9, replace = FALSE), nrow = 9, ncol = 9)
@@ -58,6 +64,8 @@ generate3 <- function(Temp_m) {
 
   return(Temp_m)
 }
+
+###############################################################################
 
 #' Mix 3 function
 #'
