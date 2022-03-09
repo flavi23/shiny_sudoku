@@ -4,7 +4,6 @@
 
 library(shiny)
 library(bslib)
-#library(DT)
 
 #Define UI for application that generates a Sudoku grid and its solution
 shinyUI(fluidPage(
@@ -23,7 +22,7 @@ shinyUI(fluidPage(
                                             min = 1, max = 9),
                                sliderInput("j", "Column", 1,
                                             min = 1, max = 9),
-                               numericInput("number", "Number", NA,
+                               numericInput("number", "Number", 1,
                                             min = 1, max = 9)
                                ),
         #New panels for generating and displaying the Sudoku grid
@@ -36,9 +35,6 @@ shinyUI(fluidPage(
           tabPanel(actionButton("solve", "Resolve"),"Solution",
                    tableOutput("Solution")))
           )
-
-    #numericInput("case", " ", NA, min = 1, max = 9)
-
     )
 ))
 

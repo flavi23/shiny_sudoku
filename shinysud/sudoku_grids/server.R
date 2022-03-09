@@ -2,13 +2,11 @@
 # This is the server logic of the Sudoku Shiny web application.
 #
 
+#Function to fill in the Sudoku grid
 fill <- function(Try_grid) {
 
   if(is.na(Try_grid[i,j])) {
     Try_grid[i,j] <- num
-  }
-  else {
-    Try_grid[i,j] <- Try_grid[i,j]
   }
   return(Try_grid)
 }
@@ -22,24 +20,24 @@ shinyServer(function(input, output) {
 
 ## Generating a playable Sudoku grid of a certain level
 
-  #Creates a new global variable with the selected input level
+  #Create a new global variable with the selected input level
   difficulty <- observeEvent(input$level,{
     assign("inputLevel", input$level, envir = .GlobalEnv)
   })
 
-  #Generates the Sudoku grid from a complete 9x9 matrix (the solution)
+  #Generate the Sudoku grid from a complete 9x9 matrix (the solution)
   #when the Generate button is clicked
   generate <- eventReactive(input$generate,{
 
-    #Generates the solution matrix and assign it to a global variable
+    #Generate the solution matrix and assign it to a global variable
     assign("Matrix_sol", matrix_grid(), envir = .GlobalEnv)
 
-    #Generates a Sudoku grid from the solution matrix
+    #Generate a Sudoku grid from the solution matrix
     assign("Sudoku_grid", matrix_remover(Matrix_sol, inputLevel),
            envir = .GlobalEnv)
   })
 
-  #Displays the Sudoku grid
+  #Display the Sudoku grid
   output$Grid <- renderTable({
     generate()
   },
@@ -51,7 +49,7 @@ shinyServer(function(input, output) {
 
 ##Filling the Sudoku grid
 
-  #Assign inputs to global variables
+  #Assign inputs (line, col, number) to global variables
   line <- observeEvent(input$i,{
     assign("i", input$i, envir = .GlobalEnv)
   })
@@ -64,8 +62,14 @@ shinyServer(function(input, output) {
     assign("num", input$number, envir = .GlobalEnv)
   })
 
+  #Assign the new Sudoku_grid (filled to a global variable)
+  try <- eventReactive(input$confirm,{
+    assign("Sudoku_grid", fill(Sudoku_grid), envir = .GlobalEnv)
+  })
+
+  #Display the filled Sudoku grid
   output$RespGrid <- renderTable({
-    fill(Sudoku_grid)
+    try()
   },
   bordered = TRUE,
   colnames = FALSE,
@@ -75,12 +79,12 @@ shinyServer(function(input, output) {
 
 ##Resolving the Sudoku grid
 
-  #Shows the solution matrix when the Resolve button is clicked
+  #Show the solution matrix when the Resolve button is clicked
   resolve <- eventReactive(input$solve,{
     Matrix_sol
   })
 
-  #Displays the solution to the Sudoku
+  #Display the solution to the Sudoku
   output$Solution <- renderTable({
     resolve()
   },
@@ -90,3 +94,4 @@ shinyServer(function(input, output) {
   digits = 0)
 
 })
+
