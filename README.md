@@ -1,5 +1,5 @@
 # shiny_sudoku
-<p>R shiny project for generating and solving sudoku grids.</p>
+<p>R shiny project for generating and solving Sudoku grids.</p>
 <p>R package: shinysud</p>
 <p>Shiny app: sudoku_grids</p>
 
