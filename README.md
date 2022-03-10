@@ -1,7 +1,7 @@
 # shiny_sudoku
-R shiny project for generating and solving sudoku grids.
-R package: shinysud
-Shiny app: sudoku_grids
+<p>R shiny project for generating and solving sudoku grids.</p>
+<p>R package: shinysud</p>
+<p>Shiny app: sudoku_grids</p>
 
 ## To install: 
 ```devtools::install_github("flavi23/shiny_sudoku")```
