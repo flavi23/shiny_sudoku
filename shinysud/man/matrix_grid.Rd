@@ -2,9 +2,7 @@
 % Please edit documentation in R/matrix_grid.R
 \name{matrix_grid}
 \alias{matrix_grid}
-\title{Matrix grid function
-Generates a filled 9x9 matrix corresponding to the solution
-for the Sudoku grid}
+\title{Matrix grid function}
 \usage{
 matrix_grid()
 }
@@ -12,7 +10,6 @@ matrix_grid()
 a 9x9 Matrix
 }
 \description{
-Matrix grid function
 Generates a filled 9x9 matrix corresponding to the solution
 for the Sudoku grid
 }

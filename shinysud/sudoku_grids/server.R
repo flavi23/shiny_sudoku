@@ -2,15 +2,6 @@
 # This is the server logic of the Sudoku Shiny web application.
 #
 
-#Function to fill in the Sudoku grid
-fill <- function(Try_grid) {
-
-  if(is.na(Try_grid[i,j])) {
-    Try_grid[i,j] <- num
-  }
-  return(Try_grid)
-}
-
 # Define server logic required to display the Sudoku grid
 shinyServer(function(input, output) {
 
@@ -95,3 +86,13 @@ shinyServer(function(input, output) {
 
 })
 
+###############################################################################
+
+#Function to fill in the Sudoku grid
+fill <- function(Try_grid) {
+
+  if(is.na(Try_grid[i,j])) {
+    Try_grid[i,j] <- num
+  }
+  return(Try_grid)
+}

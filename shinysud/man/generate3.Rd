@@ -7,10 +7,12 @@
 generate3(Temp_m)
 }
 \arguments{
-\item{Temp_m}{A temporary matrix storing the three columns of one block from the main matrix}
+\item{Temp_m}{A temporary matrix storing the three columns of one block
+from the main matrix}
 }
 \value{
-The same temporary matrix with the rest of the columns filled (doing another circle shift)
+The same temporary matrix with the rest of the columns filled
+(doing another circle shift)
 }
 \description{
 Generate 3 function

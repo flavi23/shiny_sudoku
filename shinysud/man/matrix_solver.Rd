@@ -2,8 +2,7 @@
 % Please edit documentation in R/matrix_solver.R
 \name{matrix_solver}
 \alias{matrix_solver}
-\title{Matrix solver function
-This function solves a Sudoku grid.}
+\title{Matrix solver function}
 \usage{
 matrix_solver(Matrix, layer = 0)
 }
@@ -17,7 +16,6 @@ a 9x9 Matrix corresponding to the solution found by the solver,
 or TRUE/FALSE
 }
 \description{
-Matrix solver function
 This function solves a Sudoku grid.
 }
 \author{

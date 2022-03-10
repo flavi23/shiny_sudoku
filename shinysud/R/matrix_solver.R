@@ -1,5 +1,5 @@
 #' Matrix solver function
-#' This function solves a Sudoku grid.
+#' @description This function solves a Sudoku grid.
 #' @param Matrix The playable matrix generated.
 #' @param layer Integer showing depth of the called functions. Default = 0.
 #' @return a 9x9 Matrix corresponding to the solution found by the solver,
@@ -8,6 +8,7 @@
 #' @export matrix_solver
 matrix_solver <- function(Matrix,layer = 0) {
 
+  #to know the time it takes to generate the Sudoku grid
   startTime <- Sys.time()
 
   print(paste0("Depth: ",layer))
@@ -76,7 +77,7 @@ matrix_solver <- function(Matrix,layer = 0) {
 ###############################################################################
 
 #' Empty cells function
-#' This function finds empty cells in the Sudoku grid and searches for
+#' @description This function finds empty cells in the Sudoku grid and searches for
 #' possible numbers to fill them.
 #' @param Matrix_m The playable matrix generated.
 #' @return a list containing a dataframe with information on the empty cells
@@ -135,6 +136,17 @@ empty_cells <- function(Matrix_m) {
 
 ###############################################################################
 
+#' By deduction function
+#' @description This function is part of the matrix_solver function
+#' to solve Sudoku grids. For each possibility, the function checks if there is
+#' another case in the same line/col/box with the same possibility.
+#' If not, the number corresponding to the possibility should be the solution.
+#' @param emptycells The dataframe with information on the empty cells
+#' of the matrix.
+#' @return a 9x9 Matrix corresponding to the solution found by the solver,
+#' or TRUE/FALSE
+#' @author Flavie B.
+#' @export matrix_solver
 by_deduction <- function(emptycells) {
   assign("NbDeduct", NbDeduct+1, envir = .GlobalEnv)
   if(NbDeduct > 3){
@@ -163,7 +175,23 @@ by_deduction <- function(emptycells) {
 
 ###############################################################################
 
-trials_errors <- function(matrix_m, emptycells,layer) {
+#' Trials and errors function
+#' @description This function is part of the matrix_solver function
+#' to solve Sudoku grids.
+#' It uses a "trial and error" method to solve the Sudoku grid.
+#' The function tries each possibility from emptycells until the grid is solved.
+#' It is also used to check if the Sudoku grid generated has a unique solution
+#' (and therefore is playable) or has multiple solutions.
+#' @param matrix_m The generated matrix/Sudoku grid we are trying to solve.
+#' @param emptycells The dataframe with information on the empty cells
+#' of the matrix.
+#' @param layer Integer showing depth of the called functions.
+#' @return a 9x9 Matrix corresponding to the solution found by the solver,
+#' or TRUE if the Sudoku grid has multiple solutions
+#' (and FALSE if something went wrong).
+#' @author Flavie B.
+#' @export trials_errors
+trials_errors <- function(matrix_m, emptycells, layer) {
 
   solved <- matrix(NA,9,9)
   solved_state <- FALSE
@@ -206,9 +234,9 @@ trials_errors <- function(matrix_m, emptycells,layer) {
 ###############################################################################
 
 #' Is valid function
-#' This function checks if a certain number can be placed in a certain empty
-#' case. The number is valid if it does not already appear in the row, column,
-#' or block of the case.
+#' @description This function checks if a certain number can be placed in a
+#' certain empty case. The number is valid if it does not already appear
+#' in the row, column, or block of the case.
 #' @param matrix The playable matrix generated.
 #' @param num the number to try (an integer between 1 and 9)
 #' @param row the row index

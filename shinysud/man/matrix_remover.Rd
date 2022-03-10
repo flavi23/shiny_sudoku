@@ -2,22 +2,23 @@
 % Please edit documentation in R/matrix_remover.R
 \name{matrix_remover}
 \alias{matrix_remover}
-\title{Matrix remover function
-A sudoku grid ready to be played based on the solution matrix generated.
-The function clears some of the cases (replacing the numbers with NA)}
+\title{Matrix remover function}
 \usage{
-matrix_remover(Matrix_sol)
+matrix_remover(Matrix_m, Level)
 }
 \arguments{
-\item{Matrix_sol}{The solution matrix generated}
+\item{Matrix_m}{The solution matrix generated}
+
+\item{Level}{The expected difficulty of the Sudoku}
 }
 \value{
-a 9x9 Matrix
+a 9x9 Matrix corresponding to a playable Sudoku grid
 }
 \description{
-Matrix remover function
-A sudoku grid ready to be played based on the solution matrix generated.
-The function clears some of the cases (replacing the numbers with NA)
+A Sudoku grid ready to be played based on the solution matrix generated.
+The function clears some of the cases (replacing the numbers with NA), tests
+the obtained grid with matrix_solver to make sure it has a unique solution
+and is of the expected difficulty.
 }
 \author{
 Flavie B.

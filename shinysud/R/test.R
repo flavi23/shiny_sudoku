@@ -13,3 +13,9 @@ l9 <- c(NA,6,NA,NA,NA,3,1,7,NA)
 matrixdiab <- data.frame(l1,l2,l3,l4,l5,l6,l7,l8,l9)
 matrixdiab <- t(as.matrix(matrixdiab))
 
+#une fois qu'on a fait difficulté, l'utiliser pour condition de while:
+#while(stop == FALSE)
+#if(diff == 1) prendre une grille avec ~20 NA qui utilise pas by deduction
+#if(diff == 2) grille avec plus de NA qui utilise peu de fois by deduction
+#if(diff == 3) grille avec encore plus de NA qui utilise plus by deduction
+#if(diff == 4) grille qui utilise trials and errors

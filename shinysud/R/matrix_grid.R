@@ -1,5 +1,5 @@
 #' Matrix grid function
-#' Generates a filled 9x9 matrix corresponding to the solution
+#' @description Generates a filled 9x9 matrix corresponding to the solution
 #' for the Sudoku grid
 #' @return a 9x9 Matrix
 #' @author Flavie B.

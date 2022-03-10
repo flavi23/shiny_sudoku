@@ -2,10 +2,7 @@
 % Please edit documentation in R/matrix_solver.R
 \name{is_valid}
 \alias{is_valid}
-\title{Is valid function
-This function checks if a certain number can be placed in a certain empty
-case. The number is valid if it does not already appear in the row, column,
-or block of the case.}
+\title{Is valid function}
 \usage{
 is_valid(matrix, num, row, col)
 }
@@ -23,10 +20,9 @@ False if the number already appears in the row/column/block,
 True otherwise.
 }
 \description{
-Is valid function
-This function checks if a certain number can be placed in a certain empty
-case. The number is valid if it does not already appear in the row, column,
-or block of the case.
+This function checks if a certain number can be placed in a
+certain empty case. The number is valid if it does not already appear
+in the row, column, or block of the case.
 }
 \author{
 Flavie B.

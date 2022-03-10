@@ -2,9 +2,7 @@
 % Please edit documentation in R/matrix_solver.R
 \name{empty_cells}
 \alias{empty_cells}
-\title{Empty cells function
-This function finds empty cells in the sudoku grid and searches for
-possible numbers to fill them.}
+\title{Empty cells function}
 \usage{
 empty_cells(Matrix_m)
 }
@@ -16,8 +14,7 @@ a list containing a dataframe with information on the empty cells
 of the matrix and a Boolean
 }
 \description{
-Empty cells function
-This function finds empty cells in the sudoku grid and searches for
+This function finds empty cells in the Sudoku grid and searches for
 possible numbers to fill them.
 }
 \author{

@@ -12,7 +12,8 @@ offset3(Vect, Rev = FALSE)
 \item{Rev}{A Boolean to indicate the direction of the offset}
 }
 \value{
-The same vector with the first three numbers now being the fourth fifth and sixth and so on (shifting in circle)
+The same vector with the first three numbers now being the fourth
+fifth and sixth and so on (shifting in circle)
 }
 \description{
 Offset 3 function
