@@ -17,3 +17,9 @@
 
 <p>- <i>sudoku_grids</i> folder to be able to run the Shiny app</p>
 <p>- Source code (.tar.gz) for a local install</p>
+
+## Requires
+
+<p>- R version 4.1.0 or more</p>
+<p>- Packages: shiny, bslib, stats</p>
+<p>- <i>sudoku_grids</i> to be set as working directory</p>
