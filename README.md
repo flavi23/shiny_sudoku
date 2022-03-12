@@ -7,11 +7,11 @@
 <p>Shiny app: sudoku_grids</p>
 
 ## Install
-```devtools::install_github("flavi23/shiny_sudoku")```
+```devtools::install_github("flavi23/shiny_sudoku", subdir = "shinysud")```
 
-or 
-
-```source("https://github.com/flavi23/shiny_sudoku")```
+<p>or</>
+  
+```install.packages("~/shinysud_1.0.0.tar.gz", repos = NULL, type = "source")```
 
 ## Downloads
 
