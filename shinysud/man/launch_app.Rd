@@ -10,7 +10,7 @@ launch_app()
 shiny app
 }
 \description{
-Launch the Shiny app "sudoku_grids"
+Launch the Shiny app "sudoku_grids". The directory "sudoku_grids" needs to be set as the working directory.
 }
 \author{
 Flavie B.

@@ -17,19 +17,15 @@ matrix_remover <- function(Matrix_m,Level) {
   #make sure the level selected exists
   rank <- c("Impossible","TooEasy","Easy","Medium","Difficult")
   if(!Level %in% rank){
-    print('pb level')
     stop("Level of matrix remover unknown")
     }
 
   #re initialise Difficulty variable and keep a copy of Matrix_m to go back to
   #if needed
   Matrix_begin <- Matrix_m
-  print(Matrix_begin)
   assign("Dif","TooEasy",envir = .GlobalEnv)
 
   #while a grid of the expected level has not been generated
-  print(Dif)
-  print(Level)
   while(Dif != Level){
 
     #initialisation
@@ -38,8 +34,6 @@ matrix_remover <- function(Matrix_m,Level) {
     Sudoku <- Matrix_m
     assign("Dif","TooEasy",envir = .GlobalEnv)
 
-    print(tryNA)
-    print(!all(tryNA==FALSE))
     while((Dif != Level && !all(tryNA==FALSE)) && which(rank == Level) > which(rank == Dif)) {
       Matrix_m <- Sudoku
 
@@ -48,7 +42,7 @@ matrix_remover <- function(Matrix_m,Level) {
       #try to put NA now
       j <- floor(runif(1,1,length(Matrix_m[tryNA == TRUE])))
       Matrix_m[tryNA == TRUE][j] <- NA
-      print(Matrix_m[tryNA == TRUE][j])
+
       #and in this same position j, change TRUE in FALSE, which means
       #we tried to put NA instead of the number in this position.
       #this is to make sure we don't always try the same positions
@@ -60,10 +54,8 @@ matrix_remover <- function(Matrix_m,Level) {
 
       #to check the difficulty
       print(Dif)
-      #print(tryNA)
 
       #if solving is indeed a matrix, it means it's a valid Sudoku grid
-      print(solving)
       if(is.matrix(solving)) {
         Sudoku <- Matrix_m
       }

@@ -1,5 +1,5 @@
 #' Launch App function
-#' @description Launch the Shiny app "sudoku_grids"
+#' @description Launch the Shiny app "sudoku_grids". The directory "sudoku_grids" needs to be set as the working directory.
 #' @return shiny app
 #' @author Flavie B.
 #' @export launch_app

@@ -2,7 +2,7 @@
 #This is the user-interface definition of The Sudoku Shiny web application.
 #
 
-#library(shiny)
+library(shiny)
 library(bslib)
 
 #Define UI for application that generates a Sudoku grid and its solution
