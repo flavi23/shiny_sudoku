@@ -4,7 +4,11 @@ Version: 1.0.0
 Authors@R: 
     person("Flavie", "Benard", , "flavie.benard@etu.umontpellier.fr", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: The package allows you to build a shiny app for generating sudoku grids, filling them in, and show the solution.
+Description: The package allows you to build a shiny app for 
+            generating sudoku grids, filling them in, and show the solution.
+Suggested:
+        shiny,
+        bslib
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

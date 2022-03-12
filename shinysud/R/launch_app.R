@@ -4,7 +4,6 @@
 #' @author Flavie B.
 #' @export launch_app
 launch_app <- function() {
-  library(shiny)
   runApp(
     appDir = getwd(),
     port = getOption("shiny.port"),
