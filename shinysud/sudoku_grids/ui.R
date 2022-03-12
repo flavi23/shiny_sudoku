@@ -30,9 +30,10 @@ shinyUI(fluidPage(
     tabPanel(actionButton("generate","Generate"),"Grid",
              tableOutput("Grid")),
     tabPanel(actionButton("confirm","Confirm"),"Your try",
-             tableOutput("RespGrid")),
+             tableOutput("RespGrid"), actionButton("verify","Verify")),
     tabPanel(actionButton("solve", "Resolve"),"Solution",
-             tableOutput("Solution")))
+             tableOutput("Solution"))),
+    textOutput("Check")
   )
   )
 ))

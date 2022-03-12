@@ -5,10 +5,6 @@
 # Define server logic required to display the Sudoku grid
 shinyServer(function(input, output) {
 
-    #       if(is.na(Sudoku_grid[i,j])) {
-    #         Sudoku_grid[i,j] <- input$case
-    #       }
-
 ## Generating a playable Sudoku grid of a certain level
 
   #Create a new global variable with the selected input level
@@ -26,6 +22,9 @@ shinyServer(function(input, output) {
     #Generate a Sudoku grid from the solution matrix
     assign("Sudoku_grid", matrix_remover(Matrix_sol, inputLevel),
            envir = .GlobalEnv)
+
+    #Store the Sudoku grid in another variable
+    assign("Start_grid", Sudoku_grid, envir = .GlobalEnv)
   })
 
   #Display the Sudoku grid
@@ -53,7 +52,7 @@ shinyServer(function(input, output) {
     assign("num", input$number, envir = .GlobalEnv)
   })
 
-  #Assign the new Sudoku_grid (filled to a global variable)
+  #Assign the new filled Sudoku_grid to the global variable
   try <- eventReactive(input$confirm,{
     assign("Sudoku_grid", fill(Sudoku_grid), envir = .GlobalEnv)
   })
@@ -69,6 +68,23 @@ shinyServer(function(input, output) {
   digits = 0)
 
 ##Resolving the Sudoku grid
+
+  #Check if the filled Sudoku grid is the same as the Solution
+  check_solved <- eventReactive(input$verify,{
+    if(all(!is.na(Sudoku_grid))) {
+      if(all(Sudoku_grid == Matrix_sol)) {
+        return("Congrats, you solved the Sudoku!")
+      }
+      else {
+        return("Oh, that's not quite right... Try again?")
+      }
+    }
+  })
+
+  #Display a message
+  output$Check <- renderText({
+    check_solved()
+  })
 
   #Show the solution matrix when the Resolve button is clicked
   resolve <- eventReactive(input$solve,{
@@ -91,7 +107,7 @@ shinyServer(function(input, output) {
 #Function to fill in the Sudoku grid
 fill <- function(Try_grid) {
 
-  if(is.na(Try_grid[i,j])) {
+  if(is.na(Start_grid[i,j])) {
     Try_grid[i,j] <- num
   }
   return(Try_grid)

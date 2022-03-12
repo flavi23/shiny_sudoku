@@ -25,7 +25,9 @@ matrix_solver <- function(Matrix,layer = 0) {
     return(Matrix)
   }
 
+  #counter to set the difficulty level
   counterdif = 0
+
   #while all the functions return TRUE, and the matrix is not solved,
   #matrix_solver tries to solve it
   while(temp[2] == TRUE) {
@@ -65,7 +67,7 @@ matrix_solver <- function(Matrix,layer = 0) {
     if (counterdif > 52) {
       assign("Dif", "Medium", envir = .GlobalEnv)
     }
-    else if (counterdif > 48) {
+    else if (counterdif > 45) {
       assign("Dif", "Easy", envir = .GlobalEnv)
     }
   }
